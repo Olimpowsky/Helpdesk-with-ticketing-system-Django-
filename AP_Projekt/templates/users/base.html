@@ -1,25 +1,24 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-    <style>
-        body {
-            background-color: $indigo-500;
-          }
-    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Dział pomocy technicznej XYZ</title>
 </head>
 
-<body class ="bg-dark">
- <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+<body class="bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
         <div class="container-fluid">
             <a class="navbar-brand mx-auto" href="/">Dział Pomocy Technicznej</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-lable="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-lable="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent"></div> 
+            <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
             <!--
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
@@ -42,18 +41,28 @@
                     </li>
                 </ul>
             -->
-                <a href="" class="btn btn-secondary me-2">Zaloguj się</a>
-                <a href="" class="btn btn-secondary">Zarejestruj się</a>
-            </div>
+            <a href="{% url 'login' %}" class="btn btn-secondary me-2">Zaloguj się</a>
+            <a href="{% url 'register-customer' %}" class="btn btn-secondary">Zarejestruj się</a>
+        </div>
 
         </div>
     </nav>
-   <div class="contairer">
-    {% block content %}
+    <div class="contairer">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}} mx-auto" style="width: 40rem;" role="alert">
+            <b>{{message}}</b>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% block content %}
 
-    {% endblock content %}
-   </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"> </script>
+        {% endblock content %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"> </script>
 </body>
+
 </html>
 ```

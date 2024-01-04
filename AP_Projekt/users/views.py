@@ -20,7 +20,7 @@ def register_customer(request):
     else:
         form = RegisterCustomerForm()
         context = {'form':form}
-        return render(request, 'users/register-customer.html', context)
+        return render(request, 'users/register_customer.html', context)
 
 #Funkcja logowania użytkownika
 def login_user(request):
