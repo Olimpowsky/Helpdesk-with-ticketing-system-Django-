@@ -2,17 +2,17 @@ import datetime
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Ticket
-from .form import CreatTicketForm, UpdateTicketForm
+from .form import CreateTicketForm, UpdateTicketForm
 
 
 
 def create_ticket(request):
     if request.method == 'POST':
-        form = CreatTicketForm(request.POST)
+        form = CreateTicketForm(request.POST)
         if form.is_valid():
             var = form.save(commit=False)
             var.created_by = request.user
-            var.ticket.status = 'Pending'
+            var.ticket_status = 'Pending'
             var.save()
             messages.info(request, 'Zgłoszenie zostało wysłane')
             return redirect('dashboard')
@@ -21,7 +21,7 @@ def create_ticket(request):
             return redirect('create-ticket')
 
     else:
-        form = CreatTicketForm()
+        form = CreateTicketForm()
         context = {'form':form}
         return render(request, 'ticket/create_ticket.html', context)
     
@@ -47,7 +47,7 @@ def ticket_details(request, pk):
     return render(request, 'ticket/ticket_details.html', context)
 
 def all_tickets(request):
-    tickets = Ticket.objects.filter(created_by=request.user)
+    tickets = Ticket.objects.filter(created_by=request.user).order_by('-date_created')
     context = {'tickets':tickets}
     return render(request, 'ticket/all_tickets.html', context)
 

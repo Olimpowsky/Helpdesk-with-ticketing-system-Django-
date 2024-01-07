@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card mx-auto" style="width: 76rem;">
+    <div class="card-body">
+        <h5 class="card-title mb-3">Lista Zgłoszeń</h5>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">ID zgłoszenia</th>
+                    <th scope="col">Tytuł Zgłoszenia</th>
+                    <th scope="col">Utworzono</th>
+                    <th scope="col">Przypisano do</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+                <tr>
+                    <td>{{ticket.ticket_number}}</td>
+                    <td>{{ticket.title}}</td>
+                    <td>{{ticket.date_created}}</td>
+                    {% if ticket.assigned_to %}
+                    <td>{{ticket.assigned_to}}</td>
+                    {% else %}
+                    <td>Nie przydzielono</td>
+                    {% endif %}
+                    {% if ticket.ticket_status == 'Active' %}
+                    <td><span class="badge bg-success">Aktywny</span></td>
+                    {% elif ticket.ticket_status == 'Pending' %}
+                    <td><span class="badge bg-warning">Oczekujący</span></td>
+                    {% elif tticket.ticket_status == 'Completed' %}
+                    <td><span class="badge bg-danger">Zakończony</span></td>
+                    {% endif %}
+                    <td><a href="#">Szczegóły Zgłoszenia</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock content %}

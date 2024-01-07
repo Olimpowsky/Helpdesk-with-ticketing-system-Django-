@@ -6,6 +6,7 @@ class Ticket(models.Model):
     ticket_number = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField(max_length=120)
     description = models.TextField(default='')
+    workplace_nr = models.IntegerField(choices=[(i, str(i)) for i in range(101)], default=0)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_by')
     date_created = models.DateTimeField(auto_now_add=True)
     assigned_to = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
@@ -13,6 +14,12 @@ class Ticket(models.Model):
     accepted_date = models.DateTimeField(null=True, blank=True)
     closed_date = models.DateTimeField(null=True, blank=True)
     image = models.ImageField(upload_to='ticket_images/', null=True, blank=True)
+    priority_choices = (
+        ('Not Affecting', 'Problem nie wpływa na prace przy stanowisku'),
+        ('Hindering', 'Problem utrudnia pracę przy stanowisku'),
+        ('Preventing', 'Problem uniemożliwia pracę przy stanowisku'),
+    )
+    priority = models.CharField(choices=priority_choices, max_length=120, default='Not Affecting')
     status_choices = (
         ('Active', 'Active'),
         ('Pending', 'Pending'),
