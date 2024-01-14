@@ -1,7 +1,7 @@
 import datetime
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Ticket
+from .models import Ticket, Message
 from .form import CreateTicketForm, UpdateTicketForm
 from django.contrib.auth.decorators import login_required
 
@@ -44,7 +44,17 @@ def update_ticket(request, pk):
 @login_required
 def ticket_details(request, pk):
     ticket = Ticket.objects.get(pk=pk)
-    context = {'ticket':ticket}
+    ticket_messages = ticket.message_set.all().order_by('-date_created')
+
+    if request.method == 'POST':
+        message = Message.objects.create(
+            user = request.user,
+            ticket = ticket,
+            message = request.POST.get('message')
+        )
+        return redirect('ticket-details', pk=pk)
+
+    context = {'ticket':ticket, 'ticket_messages':ticket_messages}
     return render(request, 'ticket/ticket_details.html', context)
 @login_required
 def all_tickets(request):

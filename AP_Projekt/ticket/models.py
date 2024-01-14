@@ -38,4 +38,12 @@ class Ticket(models.Model):
     def _str_(self):
         return self.title
     
+
+class Message(models.Model):
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField(default='')
+    date_created = models.DateTimeField(auto_now_add=True)
+    def _str_(self):
+        return self.message[0:50]
 # Create your models here.
