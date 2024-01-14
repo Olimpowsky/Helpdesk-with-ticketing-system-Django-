@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="card mx-auto" style="width: 40rem;">
+        <div class="card-body">
+            <h5 class="card-title mb-3">{{ticket.title}}</h5>
+            <p class="card-text">{{ticket.description}}</p>
+            <p>{% if ticket.image %}<img src="{{ ticket.image.url }}" alt="Ticket Image">{% endif %}</p>
+            
+                <div class="col">
+                    <b>Utworzono:</b> {{ticket.date_created}}
+                </div>
+                <div class="col">
+                    <b>Zaakceptowano:</b> {{ticket.accepted_date}}
+                </div>
+                <div class="col">
+                    <b>Przypisano do:</b> {{ticket.assigned_to}}
+                </div>
+                <div class="col">
+                    <b>Numer stanowiska:</b> {{ticket.workplace_nr}}
+                </div>
+                <div class="col">
+                    <b>Priorytet:</b> {{ticket.priority}}
+                </div>
+
+            
+                <div class="col">
+                    {% if ticket.is_resolved %}
+                    <b>Stastus</b> <span class="badge bg-danger">Ukończony</span>
+                    {% else %}
+                    <b>Stastus</b> <span class="badge bg-success">Aktywny</span>
+                    {% endif %}
+                </div>
+                <div class="col">
+                    <b>Przypisano do:</b> {{ticket.assigned_to}}
+
+        </div>
+    </div>
+
+</div>
+
+<br>
+{% if request.user.is_engineer and not ticket.is_resolved %}
+<div class="d-flex justify-content-center">
+    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Zamknij zgłoszenie</a>
+</div>
+{% endif %}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Potwierdzenie Zamknięcia Zgłoszenia</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Czy na pewno chcesz zamknąć zgłoszenie?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+                <a href="{% url 'close-ticket' ticket.pk %}" class="btn btn-primary">Zamknij zgłoszenie</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 """
 URL configuration for AP_Projekt project.
 
@@ -22,4 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ticket/', include('ticket.urls')),
     path('accounts/', include('users.urls'))
-]
+]   
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
