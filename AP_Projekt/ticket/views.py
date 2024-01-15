@@ -92,6 +92,6 @@ def workspace(request):
     return render(request, 'ticket/workspace.html', context)
 @login_required
 def all_closed_tickets(request):
-    tickets = Ticket.objects.filter(assigned_to=request.user, is_resolved=True)
+    tickets = Ticket.objects.filter(assigned_to=request.user, is_resolved=True).order_by('-date_created')
     context = {'tickets':tickets}
     return render(request, 'ticket/all_closed_tickets.html', context)
